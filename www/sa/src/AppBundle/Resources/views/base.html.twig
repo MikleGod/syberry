@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link href="{{ asset('web/bundles/app/css/bootstrap.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<div id="main-header">
+    {% block header %}
+        {% include '@views/elements/header.html.twig' %}
+    {% endblock %}
+</div>
+<div id="main-navigation">
+    {% block navigation %}
+        {% include '@views/elements/navigation.html.twig' %}
+    {% endblock %}
+</div>
+<div id="main-body">
+    {% block body %}{% endblock %}
+</div>
+<div id="main-footer">
+    {% block footer %}
+        {% include '@views/elements/footer.html.twig' %}
+    {% endblock %}
+    <link href="{{ asset('web/bundles/app/js/bootstrap.js') }}" rel="javascripts">
+    {% block javascripts %}{% endblock %}
+</div>
+</body>
+</html>
