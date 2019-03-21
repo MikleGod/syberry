@@ -1,0 +1,31 @@
+{% extends '@App/base.html.twig' %}
+{% block body %}
+    <div id="user-body">
+        <form action="{{ url('user_new') }}" method="post"><button type="submit" class="btn btn-primary">New</button></form>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td><a href="{{ url('user_show', {id: user.id}) }}">{{ user.name }}</a></td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="{{ url('user_edit', {id: user.id}) }}"><button type="button" class="btn btn-secondary">Edit</button></a>
+                            <form method="post" action="{{ url('user_delete', {id: user.id}) }}">
+                                <button type="submit" class="btn btn-secondary">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

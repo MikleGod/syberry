@@ -10,10 +10,11 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Service\PostService;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PostController
+class PostController extends Controller
 {
 
 
@@ -36,12 +37,17 @@ class PostController
      * @Route(
      *     "/admin/user/{page}/{pageId}",
      *     methods={"GET"},
-     *     requirements={"page": "^(?!new).*?", "pageId": "\d*?"}
+     *     name="post_index",
+     *     requirements={"page": "^(?!new)[a-zA-Z]*?", "pageId": "\d*?"}
      * )
      */
-    public function indexAction( $page="simple", $pageId=0)
+    public function indexAction($page = "simple", $pageId = 0)
     {
-        return new Response(implode("\n", $this->service->findAll()));
+        var_dump("indexAction " . $page . " " . $pageId);
+        return $this->render('@App/post/index.html.twig', [
+            'posts' => $this->service->findAll(),
+            'useActions' => true
+        ]);
     }
 
 
@@ -49,24 +55,30 @@ class PostController
      * @Route(
      *     "/admin/user/{id}",
      *     methods={"GET"},
+     *     name="post_show",
      *     requirements={"id": "\d*?"}
      * )
      */
-    public function showAction( $id)
+    public function showAction($id)
     {
-        return new Response($this->service->findOneById($id));
+        var_dump("showAction " . $id);
+        return $this->render('@App/post/show.html.twig', [
+            'post' => $this->service->findOneById($id)
+        ]);
     }
 
     /**
      * @Route(
      *     "/admin/user/{id}/edit",
      *     methods={"GET", "POST"},
+     *     name="post_edit",
      *     requirements={"id": "\d*?"}
      * )
      *
      * @Route(
      *     "/admin/user/new",
      *     methods={"GET", "POST"},
+     *     name="post_new",
      *     defaults={"id": "-1"}
      * )
      * @param int $id
@@ -74,51 +86,56 @@ class PostController
      */
     public function editAction(int $id)
     {
-        if ($id != -1) {
-            return new Response($this->service->findOneById($id));
-        } else {
-            return new Response("new");
-        }
+        return $this->render('@App/post/edit.html.twig');
     }
 
     /**
      * @Route(
      *     "/admin/user/{id}/delete",
      *     methods={"DELETE"},
+     *     name="post_delete",
      *     requirements={"id": "\d*?"}
      * )
      */
-    public function deleteAction( $id)
+    public function deleteAction($id)
     {
-        return new Response($this->service->findOneById($id));
+        $this->addFlash('success', 'Deleting was OK!');
+        return $this->redirect($this->generateUrl('post_index'));
     }
-
 
 
     /**
      * @Route(
-     *     "/admin/user/{page}",
+     *     "/post/{page}",
      *     methods={"GET"},
+     *     name="post_list",
      *     requirements={"page": "\d*?"}
      * )
      */
-    public function listAction( $page = 0)
+    public function listAction($page = 0)
     {
-        return new Response(implode("\n", $this->service->findAll()));
+        var_dump("listAction " . $page);
+        return $this->render('@App/post/index.html.twig', [
+            'posts' => $this->service->findAll(),
+            'useActions' => false
+        ]);
     }
-
 
 
     /**
      * @Route(
-     *     "/admin/user/{slug}",
+     *     "/post/{slug}",
      *     methods={"GET"},
+     *     name="post_view",
      *     requirements={"slug": "\w*?"}
      * )
      */
-    public function viewAction( $slug)
+    public function viewAction($slug)
     {
-        return new Response($this->service->findOneBySlug($slug));
+        var_dump("showAction " . $slug);
+        return $this->render('@App/post/show.html.twig', [
+            'post' => $this->service->findOneBySlug($slug)
+        ]);
     }
 
 

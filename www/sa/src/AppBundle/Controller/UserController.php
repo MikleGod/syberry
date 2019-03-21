@@ -10,10 +10,13 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Service\UserService;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController
+class UserController extends Controller
 {
 
 
@@ -34,14 +37,17 @@ class UserController
 
     /**
      * @Route(
-     *     "/admin/{page}/{pageId}",
+     *     path="/admin/{page}/{pageId}",
      *     methods={"GET"},
-     *     requirements={"page": "^(?!new).*?", "pageId": "\d*?"}
+     *     name="user_index",
+     *     requirements={"page": "^(?!new)[a-zA-Z]*?", "pageId": "\d*?"}
      * )
      */
-    public function indexAction( $page="simple", $pageId=0)
+    public function indexAction($page = "simple", $pageId = 0)
     {
-        return new Response(implode("\n", $this->service->findAll()));
+        return $this->render('@App/user/index.html.twig', [
+            'users' => $this->service->findAll()
+        ]);
     }
 
 
@@ -49,24 +55,30 @@ class UserController
      * @Route(
      *     "/admin/{id}",
      *     methods={"GET"},
+     *     name="user_show",
      *     requirements={"id": "\d*?"}
      * )
      */
-    public function showAction( $id)
+    public function showAction($id)
     {
-        return new Response($this->service->findOneById($id));
+        var_dump("showAction " . $id);
+        return $this->render('@App/user/show.html.twig', [
+            'user' => $this->service->findOneById($id)
+        ]);
     }
 
     /**
      * @Route(
      *     "/admin/{id}/edit",
      *     methods={"GET", "POST"},
+     *     name="user_edit",
      *     requirements={"id": "\d*?"}
      * )
      *
      * @Route(
      *     "/admin/new",
      *     methods={"GET", "POST"},
+     *     name="user_new",
      *     defaults={"id": "-1"}
      * )
      * @param int $id
@@ -74,23 +86,21 @@ class UserController
      */
     public function editAction(int $id)
     {
-        if ($id != -1) {
-            return new Response($this->service->findOneById($id));
-        } else {
-            return new Response("new");
-        }
+        return $this->render('@App/user/edit.html.twig');
     }
 
     /**
      * @Route(
      *     "/admin/{id}/delete",
-     *     methods={"DELETE"},
+     *     methods={"POST"},
+     *     name="user_delete",
      *     requirements={"id": "\d*?"}
      * )
      */
-    public function deleteAction( $id)
+    public function deleteAction($id)
     {
-        return new Response($this->service->findOneById($id));
+        $this->addFlash('success', 'Deleting was OK!');
+        return $this->redirect($this->generateUrl('user_index'));
     }
 
 }

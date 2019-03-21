@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link href="{{ asset('web/bundles/app/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/css/bootstrap.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -25,7 +25,9 @@
     {% block footer %}
         {% include '@views/elements/footer.html.twig' %}
     {% endblock %}
-    <link href="{{ asset('web/bundles/app/js/bootstrap.js') }}" rel="javascripts">
+</div>
+<div id="main-js">
+    <link href="{{ asset('bundles/app/js/bootstrap.js') }}" rel="javascripts">
     {% block javascripts %}{% endblock %}
 </div>
 </body>

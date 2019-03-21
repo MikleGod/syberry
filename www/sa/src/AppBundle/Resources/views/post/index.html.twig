@@ -1,0 +1,41 @@
+{% extends '@App/base.html.twig' %}
+{% block body %}
+    <div id="post-body">
+        <form action="{{ url('post_new') }}" method="post">
+            <button type="submit" class="btn btn-primary">New</button>
+        </form>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                {% if useActions == true %}
+                    <th scope="col">Actions</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                    <th scope="row">{{ post.id }}</th>
+                    <td><a href="{{ url('post_show', {id: post.id}) }}">{{ post.title }}</a></td>
+                    <td>{{ post.description }}</td>
+                    {% if useActions == true %}
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{{ url('post_edit', {id: post.id}) }}">
+                                    <button type="button" class="btn btn-secondary">Edit</button>
+                                </a>
+                                <form method="post" action="{{ url('post_delete', {id: post.id}) }}">
+                                    <button type="submit" class="btn btn-secondary">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
