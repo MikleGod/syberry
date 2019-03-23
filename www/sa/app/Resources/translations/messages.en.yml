@@ -1,0 +1,19 @@
+welcome.to: Welcome to
+symfony: Symfony
+your.app.is.ready: 'Your application is now ready. You can start working on it at:'
+what.next: What's next?
+read.doc: Read the documentation to learn
+create.first.page: How to create your first page in Symfony
+id: Id
+name: Name
+description: Description
+actions: Actions
+edit: Edit
+delete: Delete
+post.id: Post id
+post.title: post title
+post.description: post description
+user.id: User id
+user.name: user name
+welcome: Welcome!
+hello.dear.friend: Hello my dear friend!

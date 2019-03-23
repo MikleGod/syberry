@@ -1,6 +1,6 @@
 {% extends '@App/base.html.twig' %}
 {% block body %}
     <h2>
-        Post id: {{ post.id }}, post title: {{ post.title }}, post description: {{ post.description }}
+        {% trans %}post.id{% endtrans %}: {{ post.id }}, {% trans %}post.title{% endtrans %}: {{ post.title }}, {% trans %}post.description{% endtrans %}: {{ post.description }}
     </h2>
 {% endblock %}

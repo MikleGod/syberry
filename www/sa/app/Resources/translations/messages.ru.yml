@@ -1,0 +1,19 @@
+welcome.to: Добро пожаловать в
+symfony: Symfony
+your.app.is.ready: 'Ваше приложение готово к работе. Вы можете начать разработку:'
+what.next: Что дальше?
+read.doc: Читайте документацию для обучения
+create.first.page: Как создать вашу первую страницу
+id: Идентификатор
+name: Имя
+description: Описание
+actions: Действия
+edit: Изменить
+delete: Удалить
+post.id: Id поста
+post.title: заголовок поста
+post.description: описание поста
+user.id: Id пользователя
+user.name: имя пользователя
+welcome: Добро пожаловать!
+hello.dear.friend: Привет, мой дорогой друг!

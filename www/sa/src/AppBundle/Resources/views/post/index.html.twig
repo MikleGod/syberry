@@ -7,11 +7,11 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
+                <th scope="col">{% trans %}id{% endtrans %}</th>
+                <th scope="col">{% trans %}name{% endtrans %}</th>
+                <th scope="col">{% trans %}description{% endtrans %}</th>
                 {% if useActions == true %}
-                    <th scope="col">Actions</th>
+                    <th scope="col">{% trans %}actions{% endtrans %}</th>
                 {% endif %}
             </tr>
             </thead>
@@ -25,10 +25,10 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ url('post_edit', {id: post.id}) }}">
-                                    <button type="button" class="btn btn-secondary">Edit</button>
+                                    <button type="button" class="btn btn-secondary">{% trans %}edit{% endtrans %}</button>
                                 </a>
                                 <form method="post" action="{{ url('post_delete', {id: post.id}) }}">
-                                    <button type="submit" class="btn btn-secondary">Delete</button>
+                                    <button type="submit" class="btn btn-secondary">{% trans %}delete{% endtrans %}</button>
                                 </form>
                             </div>
                         </td>
