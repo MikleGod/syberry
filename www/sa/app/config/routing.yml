@@ -1,3 +1,9 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+acme_privacy:
+    path: /home
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    '@App/static/home.html.twig'
