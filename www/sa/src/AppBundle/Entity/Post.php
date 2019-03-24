@@ -9,58 +9,61 @@
 namespace AppBundle\Entity;
 
 
-class Post
-{
-    private static $count = 0;
+use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @var int $id
-     */
-    private $id;
+/**
+ * Class Post
+ * @package AppBundle\Entity
+ * @ORM\Entity
+ * @ORM\Table(name="post")
+ */
+class Post extends BaseEntity
+{
 
 
     /**
      * @var string $title
+     * @ORM\Column(type="string", length=100)
      */
     private $title;
 
     /**
      * @var string $description
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
+
+    /**
+     * @var string $slug
+     * @ORM\Column(type="string", length=100)
+     */
+    private $slug;
+
+
+    /**
+     * @var \DateTime $postAt
+     * @ORM\Column(type="datetime", length=100, nullable=true)
+     */
+    private $postAt;
+
+
     /**
      * Post constructor.
-     * @param int $id
      * @param string $title
      * @param string $description
+     * @param string $slug
+     * @param \DateTime $postAt
      */
-    public function __construct(string $title = "",  string $description = "", int $id = -1)
+    public function __construct(string $title, string $slug, string $description = "", ?\DateTime $postAt = null)
     {
-        if ($id !== -1){
-            $this->id = $id;
-        } else {
-            $this->id = self::$count++;
-        }
         $this->title = $title;
         $this->description = $description;
+        $this->slug = $slug;
+        $this->postAt = $postAt;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return string
@@ -73,7 +76,7 @@ class Post
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
@@ -93,6 +96,39 @@ class Post
     {
         $this->description = $description;
     }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPostAt(): \DateTime
+    {
+        return $this->postAt;
+    }
+
+    /**
+     * @param \DateTime $postAt
+     */
+    public function setPostAt(\DateTime $postAt): void
+    {
+        $this->postAt = $postAt;
+    }
+
 
 
 

@@ -9,66 +9,146 @@
 namespace AppBundle\Entity;
 
 
-class User
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Class User
+ * @package AppBundle\Entity
+ * @ORM\Entity
+ * @ORM\Table(name="user")
+ */
+class User extends BaseEntity
 {
 
     /**
-     * @var int $id
+     * @var string $firstName
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $id;
+    private $firstName;
+
 
     /**
-     * @var string $name
+     * @var string $surname
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $name;
+    private $surname;
+
+    /**
+     * @var string $email
+     * @ORM\Column(type="string", length=50)
+     */
+    private $email;
+
+    /**
+     * @var string $nickname
+     * @ORM\Column(type="string", length=50)
+     */
+    private $nickname;
+
+    /**
+     * @var string $password
+     * @ORM\Column(type="string", length=50)
+     */
+    private $password;
 
     /**
      * User constructor.
-     * @param int $id
-     * @param string $name
+     * @param string $firstName
+     * @param string $surname
+     * @param string $email
+     * @param string $nickname
+     * @param string $password
      */
-    public function __construct(int $id = 0, string $name = "")
+    public function __construct(string $firstName, string $surname, string $email, string $nickname, string $password)
     {
-        $this->id = $id;
-        $this->name = $name;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->surname = $surname;
+        $this->email = $email;
+        $this->nickname = $nickname;
+        $this->password = $password;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getFirstName(): string
     {
-        return $this->name;
+        return $this->firstName;
     }
 
     /**
-     * @param string $name
+     * @param string $firstName
      */
-    public function setName(string $name): void
+    public function setFirstName(string $firstName): void
     {
-        $this->name = $name;
+        $this->firstName = $firstName;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function getSurname(): string
     {
-        return "user id: $this->id, user name: $this->name";
+        return $this->surname;
     }
+
+    /**
+     * @param string $surname
+     */
+    public function setSurname(string $surname): void
+    {
+        $this->surname = $surname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNickname(): string
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @param string $nickname
+     */
+    public function setNickname(string $nickname): void
+    {
+        $this->nickname = $nickname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+
 
 
 }
