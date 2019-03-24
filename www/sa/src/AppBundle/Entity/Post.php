@@ -47,20 +47,28 @@ class Post extends BaseEntity
      */
     private $postAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $author;
+
 
     /**
      * Post constructor.
      * @param string $title
-     * @param string $description
      * @param string $slug
+     * @param User $author
+     * @param string $description
      * @param \DateTime $postAt
      */
-    public function __construct(string $title, string $slug, string $description = "", ?\DateTime $postAt = null)
+    public function __construct(string $title, string $slug, User $author, string $description = "", ?\DateTime $postAt = null)
     {
         $this->title = $title;
         $this->description = $description;
         $this->slug = $slug;
         $this->postAt = $postAt;
+        $this->author = $author;
     }
 
 
@@ -80,6 +88,24 @@ class Post extends BaseEntity
     {
         $this->title = $title;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
+    }
+
+
 
     /**
      * @return string
