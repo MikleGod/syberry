@@ -9,8 +9,12 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\User;
+use AppBundle\Form\UserForm;
 use AppBundle\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,12 +28,19 @@ class UserController extends Controller
     private $userRepository;
 
     /**
+     * @var EntityManagerInterface $entityManager
+     */
+    private $entityManager;
+
+    /**
      * UserController constructor.
      * @param UserRepository $userRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $this->userRepository = $userRepository;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -79,11 +90,29 @@ class UserController extends Controller
      *     defaults={"id": "-1"}
      * )
      * @param int $id
+     * @param Request $request
      * @return Response
      */
-    public function editAction(int $id)
+    public function editAction(int $id, Request $request)
     {
-        return $this->render('@App/user/edit.html.twig');
+        if ($id !== -1) {
+            $user = $this->userRepository->findOneBy(['id' => $id]);
+        } else {
+            $user = new User();
+        }
+
+        $form = $this->createForm(UserForm::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            return $this->redirect($this->generateUrl('user_index'));
+        }
+        return $this->render('@App/post/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
