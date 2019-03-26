@@ -122,13 +122,16 @@ class PostController extends Controller
     /**
      * @Route(
      *     "/admin/user/{id}/delete",
-     *     methods={"DELETE"},
+     *     methods={"DELETE", "POST"},
      *     name="post_delete",
      *     requirements={"id": "\d*?"}
      * )
      */
     public function deleteAction($id)
     {
+        $post = $this->postRepository->find($id);
+        $this->entityManager->remove($post);
+        $this->entityManager->flush();
         $this->addFlash('success', 'Deleting was OK!');
         return $this->redirect($this->generateUrl('post_index'));
     }

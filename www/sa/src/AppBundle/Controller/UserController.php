@@ -125,6 +125,9 @@ class UserController extends Controller
      */
     public function deleteAction($id)
     {
+        $user = $this->userRepository->find($id);
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
         $this->addFlash('success', 'Deleting was OK!');
         return $this->redirect($this->generateUrl('user_index'));
     }
