@@ -59,7 +59,7 @@ class User extends BaseEntity
      * @param string $nickname
      * @param string $password
      */
-    public function __construct(string $firstName, string $surname, string $email, string $nickname, string $password)
+    public function __construct(string $firstName = "", string $surname = "", string $email = "", string $nickname = "", string $password = "")
     {
         $this->firstName = $firstName;
         $this->surname = $surname;

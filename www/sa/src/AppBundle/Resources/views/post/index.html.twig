@@ -27,7 +27,7 @@
                     <td>{{ post.slug }}</td>
                     <td>{{ post.author.firstName }} {{ post.author.surname }}</td>
                     {% if useActions == true %}
-                        <td>{{ post.postAt }}</td>
+                        <td>{{ post.postAt|date('Y-m-d') }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ url('post_edit', {id: post.id}) }}">

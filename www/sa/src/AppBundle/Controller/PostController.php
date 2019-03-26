@@ -10,8 +10,12 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Post;
+use AppBundle\Entity\User;
+use AppBundle\Form\PostForm;
 use AppBundle\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,12 +29,19 @@ class PostController extends Controller
     private $postRepository;
 
     /**
+     * @var EntityManagerInterface $entityManager
+     */
+    private $entityManager;
+
+    /**
      * PostController constructor.
      * @param PostRepository $postRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
     {
         $this->postRepository = $postRepository;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -81,11 +92,31 @@ class PostController extends Controller
      *     defaults={"id": "-1"}
      * )
      * @param int $id
+     * @param Request $request
      * @return Response
      */
-    public function editAction(int $id)
+    public function editAction(int $id, Request $request)
     {
-        return $this->render('@App/post/edit.html.twig');
+        if ($id !== -1){
+            $post = $this->postRepository->findOneBy(['id' => $id]);
+        } else {
+            $post = new Post();
+        }
+
+        $form = $this->createForm(PostForm::class, $post);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()){
+            $user = $this->entityManager->getRepository(User::class)->find(1);
+            $post->setAuthor($user);
+            $this->entityManager->persist($post);
+            $this->entityManager->flush();
+            return $this->redirect($this->generateUrl('post_index'));
+        }
+        return $this->render('@App/post/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**

@@ -26,14 +26,14 @@ class BaseEntity
     /**
      * @var \DateTime
      * @Gedmo\Mapping\Annotation\Timestampable(on="create")
-     * @Doctrine\ORM\Mapping\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      * @Gedmo\Mapping\Annotation\Timestampable(on="update")
-     * @Doctrine\ORM\Mapping\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 

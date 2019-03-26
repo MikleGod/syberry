@@ -62,7 +62,7 @@ class Post extends BaseEntity
      * @param string $description
      * @param \DateTime $postAt
      */
-    public function __construct(string $title, string $slug, User $author, string $description = "", ?\DateTime $postAt = null)
+    public function __construct(string $title = "", string $slug = "", User $author = null, string $description = "", ?\DateTime $postAt = null)
     {
         $this->title = $title;
         $this->description = $description;
@@ -142,7 +142,7 @@ class Post extends BaseEntity
     /**
      * @return \DateTime
      */
-    public function getPostAt(): \DateTime
+    public function getPostAt(): ?\DateTime
     {
         return $this->postAt;
     }
@@ -150,7 +150,7 @@ class Post extends BaseEntity
     /**
      * @param \DateTime $postAt
      */
-    public function setPostAt(\DateTime $postAt): void
+    public function setPostAt(?\DateTime $postAt): void
     {
         $this->postAt = $postAt;
     }
