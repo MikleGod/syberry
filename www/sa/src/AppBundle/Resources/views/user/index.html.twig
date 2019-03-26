@@ -7,6 +7,9 @@
             <tr>
                 <th scope="col">{% trans %}id{% endtrans %}</th>
                 <th scope="col">{% trans %}name{% endtrans %}</th>
+                <th scope="col">{% trans %}surname{% endtrans %}</th>
+                <th scope="col">{% trans %}email{% endtrans %}</th>
+                <th scope="col">{% trans %}nickname{% endtrans %}</th>
                 <th scope="col">{% trans %}actions{% endtrans %}</th>
             </tr>
             </thead>
@@ -14,7 +17,10 @@
             {% for user in users %}
                 <tr>
                     <th scope="row">{{ user.id }}</th>
-                    <td><a href="{{ url('user_show', {id: user.id}) }}">{{ user.name }}</a></td>
+                    <td><a href="{{ url('user_show', {id: user.id}) }}">{{ user.firstName }}</a></td>
+                    <td>{{ user.surname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.nickname }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{ url('user_edit', {id: user.id}) }}"><button type="button" class="btn btn-secondary">{% trans %}edit{% endtrans %}</button></a>

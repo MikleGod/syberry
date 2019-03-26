@@ -17,3 +17,9 @@ user.id: User id
 user.name: user name
 welcome: Welcome!
 hello.dear.friend: Hello my dear friend!
+surname: Surname
+email: Email
+nickname: Nickname
+title: Title
+slug: Slug
+author: Author

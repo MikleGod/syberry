@@ -8,9 +8,12 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">{% trans %}id{% endtrans %}</th>
-                <th scope="col">{% trans %}name{% endtrans %}</th>
+                <th scope="col">{% trans %}title{% endtrans %}</th>
                 <th scope="col">{% trans %}description{% endtrans %}</th>
+                <th scope="col">{% trans %}slug{% endtrans %}</th>
+                <th scope="col">{% trans %}author{% endtrans %}</th>
                 {% if useActions == true %}
+                    <th scope="col">{% trans %}postAt{% endtrans %}</th>
                     <th scope="col">{% trans %}actions{% endtrans %}</th>
                 {% endif %}
             </tr>
@@ -21,7 +24,10 @@
                     <th scope="row">{{ post.id }}</th>
                     <td><a href="{{ url('post_show', {id: post.id}) }}">{{ post.title }}</a></td>
                     <td>{{ post.description }}</td>
+                    <td>{{ post.slug }}</td>
+                    <td>{{ post.author.firstName }} {{ post.author.surname }}</td>
                     {% if useActions == true %}
+                        <td>{{ post.postAt }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ url('post_edit', {id: post.id}) }}">

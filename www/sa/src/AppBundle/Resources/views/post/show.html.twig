@@ -1,6 +1,10 @@
 {% extends '@App/base.html.twig' %}
 {% block body %}
     <h2>
-        {% trans %}post.id{% endtrans %}: {{ post.id }}, {% trans %}post.title{% endtrans %}: {{ post.title }}, {% trans %}post.description{% endtrans %}: {{ post.description }}
+        {% trans %}post.id{% endtrans %}: {{ post.id }}<br>
+        {% trans %}post.title{% endtrans %}: {{ post.title }}<br>
+        {% trans %}post.description{% endtrans %}: {{ post.description }}<br>
+        {% trans %}slug{% endtrans %}: {{ post.slug }}<br>
+        {% trans %}author{% endtrans %}: {{ post.author.firstName }} {{ post.author.surname }}<br>
     </h2>
 {% endblock %}

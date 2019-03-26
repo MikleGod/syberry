@@ -17,3 +17,9 @@ user.id: Id пользователя
 user.name: имя пользователя
 welcome: Добро пожаловать!
 hello.dear.friend: Привет, мой дорогой друг!
+surname: Фамилия
+email: Почта
+nickname: Никнейм
+title: Заголовок
+slug: Слаг
+author: Автор

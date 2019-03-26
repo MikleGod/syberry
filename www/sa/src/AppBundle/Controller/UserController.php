@@ -9,11 +9,9 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Service\UserService;
+use AppBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends Controller
@@ -21,17 +19,17 @@ class UserController extends Controller
 
 
     /**
-     * @var UserService service
+     * @var UserRepository $userRepository
      */
-    private $service;
+    private $userRepository;
 
     /**
      * UserController constructor.
-     * @param UserService $service
+     * @param UserRepository $userRepository
      */
-    public function __construct(UserService $service)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->service = $service;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -46,7 +44,7 @@ class UserController extends Controller
     public function indexAction($page = "simple", $pageId = 0)
     {
         return $this->render('@App/user/index.html.twig', [
-            'users' => $this->service->findAll()
+            'users' => $this->userRepository->findAll()
         ]);
     }
 
@@ -61,9 +59,8 @@ class UserController extends Controller
      */
     public function showAction($id)
     {
-        var_dump("showAction " . $id);
         return $this->render('@App/user/show.html.twig', [
-            'user' => $this->service->findOneById($id)
+            'user' => $this->userRepository->find($id)
         ]);
     }
 

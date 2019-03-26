@@ -9,7 +9,8 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Service\PostService;
+use AppBundle\Entity\Post;
+use AppBundle\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,17 +20,17 @@ class PostController extends Controller
 
 
     /**
-     * @var PostService $service
+     * @var PostRepository $postRepository
      */
-    private $service;
+    private $postRepository;
 
     /**
      * PostController constructor.
-     * @param PostService $service
+     * @param PostRepository $postRepository
      */
-    public function __construct(PostService $service)
+    public function __construct(PostRepository $postRepository)
     {
-        $this->service = $service;
+        $this->postRepository = $postRepository;
     }
 
 
@@ -43,9 +44,8 @@ class PostController extends Controller
      */
     public function indexAction($page = "simple", $pageId = 0)
     {
-        var_dump("indexAction " . $page . " " . $pageId);
         return $this->render('@App/post/index.html.twig', [
-            'posts' => $this->service->findAll(),
+            'posts' => $this->postRepository->findAll(),
             'useActions' => true
         ]);
     }
@@ -61,9 +61,8 @@ class PostController extends Controller
      */
     public function showAction($id)
     {
-        var_dump("showAction " . $id);
         return $this->render('@App/post/show.html.twig', [
-            'post' => $this->service->findOneById($id)
+            'post' => $this->postRepository->find($id)
         ]);
     }
 
@@ -111,12 +110,23 @@ class PostController extends Controller
      *     name="post_list",
      *     requirements={"page": "\d*?"}
      * )
+     * @throws \Exception
      */
     public function listAction($page = 0)
     {
-        var_dump("listAction " . $page);
+        $query =
+            $this
+                ->postRepository
+                ->createQueryBuilder('p')
+                ->where('p.postAt <> null')
+                ->orWhere()
+                ->where('p.postAt < :datetime')
+                ->setParameter('datetime', new \DateTime())
+                ->getQuery();
+
+
         return $this->render('@App/post/index.html.twig', [
-            'posts' => $this->service->findAll(),
+            'posts' => $query->execute(),
             'useActions' => false
         ]);
     }
@@ -132,9 +142,8 @@ class PostController extends Controller
      */
     public function viewAction($slug)
     {
-        var_dump("showAction " . $slug);
         return $this->render('@App/post/show.html.twig', [
-            'post' => $this->service->findOneBySlug($slug)
+            'post' => $this->postRepository->findOneBy(['slug' => $slug])
         ]);
     }
 

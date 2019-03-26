@@ -1,6 +1,10 @@
 {% extends '@App/base.html.twig' %}
 {% block body %}
     <h2>
-        {% trans %}user.id{% endtrans %}: {{ user.id }}, {% trans %}user.name{% endtrans %}: {{ user.name }}
+        {% trans %}user.id{% endtrans %}: {{ user.id }}<br>
+        {% trans %}user.name{% endtrans %}: {{ user.firstName }}<br>
+        {% trans %}surname{% endtrans %}: {{ user.surname }}<br>
+        {% trans %}email{% endtrans %}: {{ user.email }}<br>
+        {% trans %}nickname{% endtrans %}: {{ user.nickname }}<br>
     </h2>
 {% endblock %}
