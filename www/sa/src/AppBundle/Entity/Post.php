@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Post
@@ -24,12 +25,15 @@ class Post extends BaseEntity
     /**
      * @var string $title
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="10")
      */
     private $title;
 
     /**
-     * @var string $description
+     * @var ?string $description
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="0")
      */
     private $description;
 
@@ -37,6 +41,8 @@ class Post extends BaseEntity
     /**
      * @var string $slug
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/[a-z0-9\\-]+/")
      */
     private $slug;
 
@@ -44,6 +50,8 @@ class Post extends BaseEntity
     /**
      * @var \DateTime $postAt
      * @ORM\Column(type="datetime", length=100, nullable=true)
+     * @Assert\DateTime()/**
+     * @Assert\GreaterThan("today")
      */
     private $postAt;
 
@@ -110,7 +118,7 @@ class Post extends BaseEntity
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -118,7 +126,7 @@ class Post extends BaseEntity
     /**
      * @param string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }

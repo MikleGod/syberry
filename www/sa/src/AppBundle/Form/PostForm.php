@@ -25,9 +25,9 @@ class PostForm extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, ['required' => false])
             ->add('slug', TextType::class)
-            ->add('postAt', DateTimeType::class, ['widget' => 'single_text'])
+            ->add('postAt', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->add('save', SubmitType::class);
     }
 
