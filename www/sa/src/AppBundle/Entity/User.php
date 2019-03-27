@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User
@@ -36,18 +37,23 @@ class User extends BaseEntity
     /**
      * @var string $email
      * @ORM\Column(type="string", length=50)
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @var string $nickname
      * @ORM\Column(type="string", length=50)
+     * @Assert\Regex(pattern="/^(?!.*(.).*\\1)[a-z]+$/")
+     * @Assert\NotBlank()
      */
     private $nickname;
 
     /**
      * @var string $password
      * @ORM\Column(type="string", length=50)
+     * @Assert\Regex(pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})/")
+     * @Assert\NotBlank()
      */
     private $password;
 
