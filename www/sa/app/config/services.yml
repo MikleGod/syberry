@@ -41,6 +41,7 @@ services:
 
     AppBundle\Controller\UserController:
         $userRepository: "@userRepository"
+        $encoder: "@security.password_encoder"
 
     postRepository:
         class: 'AppBundle\Repository\PostRepository'

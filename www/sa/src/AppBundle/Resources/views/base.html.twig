@@ -8,23 +8,25 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
-<div id="main-header">
-    {% block header %}
-        {% include '@views/elements/header.html.twig' %}
-    {% endblock %}
-</div>
-<div id="main-navigation">
-    {% block navigation %}
-        {% include '@views/elements/navigation.html.twig' %}
-    {% endblock %}
-</div>
-<div id="main-body">
-    {% block body %}{% endblock %}
-</div>
-<div id="main-footer">
-    {% block footer %}
-        {% include '@views/elements/footer.html.twig' %}
-    {% endblock %}
+<div class="container">
+    <div id="main-header">
+        {% block header %}
+            {% include '@views/elements/header.html.twig' %}
+        {% endblock %}
+    </div>
+    <div id="main-navigation">
+        {% block navigation %}
+            {% include '@views/elements/navigation.html.twig' %}
+        {% endblock %}
+    </div>
+    <div id="main-body">
+        {% block body %}{% endblock %}
+    </div>
+    <div id="main-footer">
+        {% block footer %}
+            {% include '@views/elements/footer.html.twig' %}
+        {% endblock %}
+    </div>
 </div>
 <div id="main-js">
     <link href="{{ asset('bundles/app/js/bootstrap.js') }}" rel="javascripts">

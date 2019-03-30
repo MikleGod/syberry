@@ -1,0 +1,8 @@
+<div class="nav">
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="nav-item">
+            <a href="{{ logout_path() }}" class="btn btn-danger">Logout</a>
+        </div>
+    {% endif %}
+</div>

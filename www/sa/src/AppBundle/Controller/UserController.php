@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserController extends Controller
 {
@@ -32,15 +34,27 @@ class UserController extends Controller
      */
     private $entityManager;
 
+
+    /**
+     * @var UserPasswordEncoder $encoder
+     */
+    private $encoder;
+
     /**
      * UserController constructor.
      * @param UserRepository $userRepository
      * @param EntityManagerInterface $entityManager
+     * @param UserPasswordEncoder $encoder
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager,
+        UserPasswordEncoder $encoder
+    )
     {
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
+        $this->encoder = $encoder;
     }
 
 
@@ -106,6 +120,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             return $this->redirect($this->generateUrl('user_index'));
