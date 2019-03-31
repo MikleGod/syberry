@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserForm;
 use AppBundle\Repository\UserRepository;
@@ -121,6 +122,8 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+            $roleRepository = $this->getDoctrine()->getRepository(Role::class);
+            $user->setRole($roleRepository->find(2));
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             return $this->redirect($this->generateUrl('user_index'));

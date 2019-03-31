@@ -108,8 +108,7 @@ class PostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
-            $user = $this->entityManager->getRepository(User::class)->find(1);
-            $post->setAuthor($user);
+            $post->setAuthor($this->getUser());
             $this->entityManager->persist($post);
             $this->entityManager->flush();
             return $this->redirect($this->generateUrl('post_index'));
@@ -152,13 +151,12 @@ class PostController extends Controller
             $this
                 ->postRepository
                 ->createQueryBuilder('p')
-                ->where('p.postAt <> null')
-                ->orWhere()
-                ->where('p.postAt < :datetime')
+                ->where('(p.postAt != null AND p.postAt < :datetime) OR p.postAt = null')
                 ->setParameter('datetime', new \DateTime())
                 ->getQuery();
 
 
+        var_dump($query);
         return $this->render('@App/post/index.html.twig', [
             'posts' => $query->execute(),
             'useActions' => false

@@ -58,6 +58,14 @@ class User extends BaseEntity implements UserInterface
      */
     private $password;
 
+
+    /**
+     * @var Role $role
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Role")
+     * @ORM\JoinColumn(name="role_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $role;
+
     /**
      * User constructor.
      * @param string $firstName
@@ -65,15 +73,40 @@ class User extends BaseEntity implements UserInterface
      * @param string $email
      * @param string $nickname
      * @param string $password
+     * @param Role|null $role
      */
-    public function __construct(string $firstName = "", string $surname = "", string $email = "", string $nickname = "", string $password = "")
-    {
+    public function __construct(
+        string $firstName = "",
+        string $surname = "",
+        string $email = "",
+        string $nickname = "",
+        string $password = "",
+        Role $role = null
+    ) {
         $this->firstName = $firstName;
         $this->surname = $surname;
         $this->email = $email;
         $this->nickname = $nickname;
         $this->password = $password;
+        $this->role = $role;
     }
+
+    /**
+     * @return Role
+     */
+    public function getRole(): Role
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param Role $role
+     */
+    public function setRole(Role $role): void
+    {
+        $this->role = $role;
+    }
+
 
     /**
      * @return string
@@ -172,7 +205,7 @@ class User extends BaseEntity implements UserInterface
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return [$this->role != null ? $this->role->getName() : "ROLE_ADMIN"];
     }
 
     /**
