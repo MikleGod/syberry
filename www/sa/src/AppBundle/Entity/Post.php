@@ -61,6 +61,12 @@ class Post extends BaseEntity
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $category;
+
 
     /**
      * Post constructor.
@@ -78,6 +84,24 @@ class Post extends BaseEntity
         $this->postAt = $postAt;
         $this->author = $author;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
+    }
+
+
 
 
 
